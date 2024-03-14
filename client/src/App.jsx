@@ -5,7 +5,7 @@ import OutLet from "./component/OutLet";
 import Register from "./pages/RegisterPage";
 import axios  from "axios";
 
-axios.defaults.baseURL ='http://127.0.0.1:5000';
+axios.defaults.baseURL ='http://localhost:5000';
 axios.defaults.withCredentials =true;
 
 function App() {

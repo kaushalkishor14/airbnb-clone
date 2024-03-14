@@ -50,7 +50,6 @@ app.post('/register', async (req, res) => {
 });
 
 // this aap.post is  login page endpoint
-
 app.post('/login', async (req,res) =>{
     const{email,password} = req.body;
     const User = await user.findOne({email});
@@ -58,7 +57,7 @@ app.post('/login', async (req,res) =>{
     if(User){
         const passOk = bcrypt.compareSync(password, User.password);
         if(passOk){
-            jwt.sign({email:User.email, id:User._id},jwtSecret,{},(error,token)=>{
+            jwt.sgin({email:User.email, id:User._id},jwtSecret,{},(error,token)=>{
                 if(error) throw error;
                 res.cookie('token',token).json('password ok');
 
@@ -73,3 +72,6 @@ app.post('/login', async (req,res) =>{
 
 
 app.listen(5000)
+
+
+

@@ -4,13 +4,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const user = require('./models/user');
+// const cookieParser = require('cookie-parser');
 
 require('dotenv').config()
 const app = express();
 
 // this line code encrpition password
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret ='ahgiushauoshbdb'
+const jwtSecret ='ahgiushauoshbdbfdgdfgfggd'
+
+// app.use(cookieParser());
 
 app.use(express.json())
 
@@ -21,7 +24,7 @@ app.use(cors(
     }
 ));
 
-console.log(process.env.MONGO_URL)
+
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -50,25 +53,23 @@ app.post('/register', async (req, res) => {
 });
 
 // this aap.post is  login page endpoint
-app.post('/login', async (req,res) =>{
-    const{email,password} = req.body;
-    const User = await user.findOne({email});
+// app.post('/login', async (req,res) =>{
+//     const{email,password} = req.body;
+//     const User = await user.findOne({email});
 
-    if(User){
-        const passOk = bcrypt.compareSync(password, User.password);
-        if(passOk){
-            jwt.sgin({email:User.email, id:User._id},jwtSecret,{},(error,token)=>{
-                if(error) throw error;
-                res.cookie('token',token).json('password ok');
+//     if(User){
+//       const passOk = bcrypt.compareSync(password ,User.password)
+//       if(passOk){
+//         res.json('pass is ok');
+    
 
-            } );
-        }else{
-            res.status(422).json('Incorrect password');
-        }
-    }else{
-        res.json('Not found')
-    }
-})
+//       }else{
+//         res.status(422).json('pass is not ok');
+//       }
+//       } else {
+//         res.json('not found');
+//       }
+// })
 
 
 app.listen(5000)

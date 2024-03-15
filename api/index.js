@@ -11,6 +11,7 @@ const app = express();
 
 // this line code encrpition password
 const bcryptSalt = bcrypt.genSaltSync(10);
+
 const jwtSecret ='ahgiushauoshbdbfdgdfgfggd'
 
 // app.use(cookieParser());
@@ -25,8 +26,9 @@ app.use(cors(
 ));
 
 
-
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL).then(()=>{
+    console.log("connedted")
+})
 
 
 
@@ -53,26 +55,26 @@ app.post('/register', async (req, res) => {
 });
 
 // this aap.post is  login page endpoint
-// app.post('/login', async (req,res) =>{
-//     const{email,password} = req.body;
-//     const User = await user.findOne({email});
+app.post('/login', async (req,res) =>{
+    const{email,password} = req.body;
+    const User = await user.findOne({email});
 
-//     if(User){
-//       const passOk = bcrypt.compareSync(password ,User.password)
-//       if(passOk){
-//         res.json('pass is ok');
+    if(User){
+      const passOk = bcrypt.compareSync(password ,User.password)
+      if(passOk){
+        res.json('pass is ok');
     
 
-//       }else{
-//         res.status(422).json('pass is not ok');
-//       }
-//       } else {
-//         res.json('not found');
-//       }
-// })
+      }else{
+        res.status(422).json('pass is not ok');
+      }
+      } else {
+        res.json('not found');
+      }
+})
 
 
-app.listen(5000)
+app.listen(5000);
 
 
 

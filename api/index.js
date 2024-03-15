@@ -3,8 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const user = require('./models/user');
-// const cookieParser = require('cookie-parser');
+const user = require('./models/user.js');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config()
 const app = express();
@@ -12,21 +12,22 @@ const app = express();
 // this line code encrpition password
 const bcryptSalt = bcrypt.genSaltSync(10);
 
-const jwtSecret ='ahgiushauoshbdbfdgdfgfggd'
+const jwtSecret = 'ahgiushauoshbdbfdgdfgfggd'
 
-// app.use(cookieParser());
 
-app.use(express.json())
+app.use(express.json());
+
+app.use(cookieParser());
 
 app.use(cors(
     {
         credentials: true,
-        origin: 'http://localhost:5173',
+        origin: 'http://127.0.0.1:5173',
     }
 ));
 
 
-mongoose.connect(process.env.MONGO_URL).then(()=>{
+mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("connedted")
 })
 
@@ -53,36 +54,46 @@ app.post('/register', async (req, res) => {
     }
 });
 
+
 // this aap.post is  login page endpoint
-app.post('/login', async (req,res) =>{
-    const{email,password} = req.body;
-    const User = await user.findOne({email});
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const User = await user.findOne({ email });
 
-    if(User){
-      const passOk = bcrypt.compareSync(password ,User.password)
-      if(passOk){
+    if (User) {
+        const passOk = bcrypt.compareSync(password, User.password)
+        if (passOk) {
+            jwt.sign({ email: email.User, id: User._id }, jwtSecret, {}, (error, token) => {
+                if (error) throw error;
+                res.cookie('token', token).json(User);
 
-        jwt.sign({email:email.User, id:User._id }, jwtSecret,{},(error, token)=>{
-            if(error) throw error;
-            res.cookie('token',token).json(User);
+            });
 
-        } );
-       
-      }else{
-        res.status(422).json('pass is not ok');
-      }
-      } else {
+        } else {
+            res.status(422).json('pass is not ok');
+        }
+    } else {
         res.json('not found');
-      }
+    }
 });
 
 
-app.get('/profile', async(res, req)=>{
-    res.json('user info')
+app.get('/profile', async (res, req) => {
+    const { token } = req.cookie;
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (error, userData) => {
+            if (error) throw error;
+            const {name, email,_id} = await user.findById(userData.id);
+
+            res.json({name,email,_id});
+        });
+
+    } else {
+        res.json(null);
+    }
+
 })
 
-
 app.listen(5000);
-
 
 

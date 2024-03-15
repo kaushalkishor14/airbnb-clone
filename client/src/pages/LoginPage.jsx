@@ -1,18 +1,23 @@
 import { Link , Navigate} from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import  axios  from "axios";
+import { UserContext } from "../UserContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 // for redirect user to home afet login state
   const[redirect, setRedirect] = useState(false);
+  // this line of code for showing userdata when he is login in page
+ const {setUser} = useContext(UserContext);
 
   async function handleLoginSubmit(ev) {
     ev.preventDefault();
     try {
-      await axios.post('/login', { email, password });
+     const {data} = await axios.post('/login', { email, password });
+     setUser(data);
       alert("Login successful");
+      // after login go home page
       setRedirect(true)
 
     } catch (error) {

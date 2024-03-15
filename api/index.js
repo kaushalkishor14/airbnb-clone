@@ -32,7 +32,6 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
 
 
 
-
 app.get('/test', (req, res) => {
     res.json('kaushal')
 });
@@ -62,15 +61,24 @@ app.post('/login', async (req,res) =>{
     if(User){
       const passOk = bcrypt.compareSync(password ,User.password)
       if(passOk){
-        res.json('pass is ok');
-    
 
+        jwt.sign({email:email.User, id:User._id }, jwtSecret,{},(error, token)=>{
+            if(error) throw error;
+            res.cookie('token',token).json(User);
+
+        } );
+       
       }else{
         res.status(422).json('pass is not ok');
       }
       } else {
         res.json('not found');
       }
+});
+
+
+app.get('/profile', async(res, req)=>{
+    res.json('user info')
 })
 
 

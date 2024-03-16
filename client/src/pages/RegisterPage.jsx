@@ -17,13 +17,13 @@ export default function Register() {
         name,
         email,
         password,
-      });
-
+      }); 
       alert("Registration successful. Now you can log in");
       // to navitate to login page
       navitate("/login");
     } catch (error) {
       alert("Registration failed. Please try again later");
+      console.log(error)
     }
   }
 

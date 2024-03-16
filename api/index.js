@@ -14,7 +14,6 @@ const bcryptSalt = bcrypt.genSaltSync(10);
 
 const jwtSecret = 'ahgiushauoshbdbfdgdfgfggd'
 
-
 app.use(express.json());
 
 app.use(cookieParser());
@@ -22,7 +21,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         credentials: true,
-        origin: 'http://127.0.0.1:5173',
+        origin: 'http://localhost:5173/',
     }
 ));
 
@@ -38,6 +37,8 @@ app.get('/test', (req, res) => {
 });
 
 
+  
+  
 // this aap.post is register page endpoint
 app.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
@@ -89,7 +90,7 @@ app.get('/profile', async (res, req) => {
         });
 
     } else {
-        res.json(null);
+         res.json(null);
     }
 
 })

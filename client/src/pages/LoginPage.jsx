@@ -38,12 +38,14 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="your@eamil.com"
+            autoComplete="username"
             value={email}
             onChange={(ev) => setEmail(ev.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
+            autoComplete="current-password"
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
           />

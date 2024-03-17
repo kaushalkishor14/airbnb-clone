@@ -18,7 +18,7 @@ export function UserContextProvider({children}) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <UserContext.Provider value={{user,setUser,ready}}>
+    <UserContext.Provider value={{user,setUser,ready,setReady}}>
       {children}
     </UserContext.Provider>
   );

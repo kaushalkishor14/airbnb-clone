@@ -5,7 +5,7 @@ import  axios  from "axios";
 
 export default function AccoundPage() {
     // const[toHomePage , setHomePage ] = useState(false);
-  const { ready, user } = useContext(UserContext);
+  const { ready, user ,setUser} = useContext(UserContext);
   let { subpage } = useParams();
   if (subpage === undefined) {
     subpage = 'profile';
@@ -20,6 +20,7 @@ export default function AccoundPage() {
 
    async function logout(){
      await axios.post('/logout');
+     setUser(null)
      navitate('/')
   }
 
@@ -50,7 +51,7 @@ export default function AccoundPage() {
         </Link>
       </nav>
       {subpage === "profile" && (
-        <div className=" text-center max-w-lg mx-auto mb-8 font-serif my-5">
+        <div className=" text-center max-w-lg mx-auto mb-8 font-serif my-5 ">
           Logged in as {user.name} ({user.email})
           <button onClick={logout} className="primary max-w-sm mt-2">Logout</button>
         </div>

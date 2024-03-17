@@ -90,8 +90,8 @@ app.get('/profile', async (req, res) => {
 
 // logout endpoint 
 
-app.post('/lagoyut' , (res, req) =>{
-    res.cookies('token' , '').json(true);
+app.post('/logout' , (req, res) =>{
+    res.cookie('token' , '').json(true);
 })
 
 app.listen(5000);

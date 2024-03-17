@@ -50,6 +50,7 @@ export default function Register() {
             type="password"
             placeholder="Password"
             value={password}
+            autoComplete="current-password"
             onChange={(ev) => setPassword(ev.target.value)}
           />
           <button className="primary my-6">Register</button>

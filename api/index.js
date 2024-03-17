@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const user = require('./models/user.js');
 const cookieParser = require('cookie-parser');
@@ -18,14 +18,11 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors(
-    {
-        credentials: true,
-        origin: 'http://localhost:5173/',
-    }
-));
-
-
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true, // You may need this option depending on your use case
+  }));
+  
 mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("connedted")
 })
@@ -64,37 +61,38 @@ app.post('/login', async (req, res) => {
     if (User) {
         const passOk = bcrypt.compareSync(password, User.password)
         if (passOk) {
-            jwt.sign({ email: email.User, id: User._id }, jwtSecret, {}, (error, token) => {
+            jwt.sign({ email: User.email, id: User._id }, jwtSecret, {}, (error, token) => {
                 if (error) throw error;
-                res.cookie('token', token).json(User);
-
+                res.cookie('token', token, { httpOnly: true }).json(User);
             });
-
         } else {
             res.status(422).json('pass is not ok');
         }
     } else {
-        res.json('not found');
+        res.status(404).json('not found');
+    }
+    
+});
+
+app.get('/profile', async (req, res) => {
+    const { token } = req.cookies;
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (error, userData) => {
+            if (error) throw error;
+            const { name, email, _id } = await user.findById(userData.id);
+            res.json({ name, email, _id });
+        });
+    } else {
+        res.json(null);
     }
 });
 
 
-app.get('/profile', async (res, req) => {
-    const { token } = req.cookie;
-    if (token) {
-        jwt.verify(token, jwtSecret, {}, async (error, userData) => {
-            if (error) throw error;
-            const {name, email,_id} = await user.findById(userData.id);
+// logout endpoint 
 
-            res.json({name,email,_id});
-        });
-
-    } else {
-         res.json(null);
-    }
-
+app.post('/lagoyut' , (res, req) =>{
+    res.cookies('token' , '').json(true);
 })
 
 app.listen(5000);
-
 

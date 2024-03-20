@@ -66,6 +66,11 @@ export default function PlacesPage() {
             </div>
             <h2 className="text-2xl mt-4 ">Description</h2>
             <p className="text-gray-400 text sm">Describe about your place you vist</p>
+            <textarea/>
+            <h2 className="text-2xl mt-4 ">Perks</h2>
+            <p className="text-gray-400 text sm">Select all the perks</p>
+            <div></div>
+            
           </from>
         </div>
       )}

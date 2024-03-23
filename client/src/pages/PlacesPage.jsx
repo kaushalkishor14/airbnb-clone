@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Preks from "../Preks";
+import axios from 'axios';
 export default function PlacesPage() {
   const { action } = useParams();
   const [title, setTitle] = useState("");
@@ -33,8 +34,9 @@ export default function PlacesPage() {
 
   // addphotoby link
 
-  function addPhotoByLink(){
-    return
+ async function addPhotoByLink(ev){
+  ev.preventDefault();
+   await axios.post('/upload-by-link' ,{link: photLink}); 
   }
 
   return (
@@ -91,7 +93,7 @@ export default function PlacesPage() {
                 onChange={(ev) => setLink(ev.target.value)}
                 placeholder={"Add using link"}
               />
-              <button className="bg-gray-200 px-4 rounded-xl ">
+              <button onChange={addPhotoByLink} className="bg-gray-200 px-4 rounded-xl ">
                 Add&nbsp;photo
               </button>
             </div>

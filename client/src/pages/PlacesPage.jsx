@@ -36,7 +36,10 @@ export default function PlacesPage() {
 
  async function addPhotoByLink(ev){
   ev.preventDefault();
-   await axios.post('/upload-by-link' ,{link: photLink}); 
+ const {data:filename} = await axios.post('/upload-by-link' ,{link: photLink}); 
+ setAddress(prev =>{
+  return [...prev]
+ })
   }
 
   return (

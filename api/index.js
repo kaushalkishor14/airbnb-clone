@@ -97,7 +97,7 @@ app.post('/logout' , (req, res) =>{
 // add photo endpoint
 app.post('/upload-by-link',async (req,res)=>{
     const {link} = res.body;
-    const newName = Date.now() + 'jpg';
+    const newName = 'photo' + Date.now() + 'jpg';
      await imageDownloader.image({
         url: link,
         dest: __dirname + '/uploads' +newName,

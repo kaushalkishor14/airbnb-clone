@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-key */
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Preks from "../Preks";
-import axios from 'axios';
+import axios from "axios";
 export default function PlacesPage() {
   const { action } = useParams();
   const [title, setTitle] = useState("");
@@ -34,14 +35,25 @@ export default function PlacesPage() {
 
   // addphotoby link
 
- async function addPhotoByLink(ev){
-  ev.preventDefault();
- const {data:filename} = await axios.post('/upload-by-link' ,{link: photLink}); 
- setAddress(prev =>{
-  return [...prev]
- })
+  async function addPhotoByLink(ev) {
+    ev.preventDefault();
+    const { data: filename } = await axios.post("/upload-by-link", {
+      link: photLink,
+    });
+    setAddPhotos((prev) => {
+      return [...prev, filename];
+    });
+    setLink("");
   }
-  jhgkhkklj
+
+ async function uploadPhoto(ev){
+   const files = ev.target.files;
+   const data = new FormData();
+   data.set('files',files([0]))
+   await axios.post('/upload', data,{
+    headers:{'content-type':'multipart/form-data'}
+   })
+  }
 
   return (
     <div>
@@ -97,16 +109,26 @@ export default function PlacesPage() {
                 onChange={(ev) => setLink(ev.target.value)}
                 placeholder={"Add using link"}
               />
-              <button onChange={addPhotoByLink} className="bg-gray-200 px-4 rounded-xl ">
+              <button
+                onChange={addPhotoByLink}
+                className="bg-gray-200 px-4 rounded-xl "
+              >
                 Add&nbsp;photo
               </button>
             </div>
-            <div className="grid grid-cols-3 lg:grid-cols-6 md:grid-cols-4 mt-4">
-              <button
+            
+            <div className=" grid grid-cols-3 lg:grid-cols-6 md:grid-cols-4 mt-4">
+              {addPhotos.length > 0 &&
+                addPhotos.map((link) => (
+                 
+                  <div><img className="rounded-2xl" src={"http://localhost:5000/uploads/"+ link} alt="image"/></div>
+                ))}
+              <label
                 value={addPhotos}
                 onChange={(ev) => setAddPhotos(ev.target.value)}
                 className=" flex justify-center gap-1 border bg-transparent rounded-md p-6 text-gray-500"
               >
+                <input type="file" className="hidden" onChange={uploadPhoto}/>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -122,7 +144,7 @@ export default function PlacesPage() {
                   />
                 </svg>
                 Upload
-              </button>
+              </label>
             </div>
             <h2 className="text-2xl mt-4 ">Description</h2>
             <p className="text-gray-400 text sm">

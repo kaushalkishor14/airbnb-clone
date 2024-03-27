@@ -136,7 +136,7 @@ export default function PlacesPage() {
                 onChange={(ev) => setAddPhotos(ev.target.value)}
                 className=" flex justify-center gap-1 border bg-transparent rounded-md p-6 text-gray-500"
               >
-                <input type="file" className="hidden" onChange={uploadPhoto}/>
+                <input type="file" multiple className="hidden" onChange={uploadPhoto}/>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

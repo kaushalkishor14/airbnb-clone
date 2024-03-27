@@ -46,12 +46,20 @@ export default function PlacesPage() {
     setLink("");
   }
 
- async function uploadPhoto(ev){
+  function uploadPhoto(ev){
+   
    const files = ev.target.files;
    const data = new FormData();
-   data.set('files',files([0]))
-   await axios.post('/upload', data,{
+   for(let i=0;i<files.length; i++){
+    data.append('photo',files[i])
+   }
+    axios.post('/upload', data,{
     headers:{'content-type':'multipart/form-data'}
+   }).then(response =>{
+    const {data:filenames} = response;
+    setAddPhotos(prev => {
+      return [...prev, ...filenames];
+    })
    })
   }
 
@@ -110,7 +118,7 @@ export default function PlacesPage() {
                 placeholder={"Add using link"}
               />
               <button
-                onChange={addPhotoByLink}
+                onClick={addPhotoByLink}
                 className="bg-gray-200 px-4 rounded-xl "
               >
                 Add&nbsp;photo

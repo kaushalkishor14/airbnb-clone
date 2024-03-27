@@ -129,7 +129,7 @@ export default function PlacesPage() {
               {addPhotos.length > 0 &&
                 addPhotos.map((link) => (
                  
-                  <div><img className="rounded-2xl" src={"http://localhost:5000/uploads/"+ link} alt="image"/></div>
+                  <div className="h-30 flex "><img className="rounded-2xl w-full object-cover position-center" src={"http://localhost:5000/uploads/"+ link} alt="image"/></div>
                 ))}
               <label
                 value={addPhotos}

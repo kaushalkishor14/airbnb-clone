@@ -1,9 +1,18 @@
 export default function Preks({selected , onChange}){
+  function handleCbClick (ev) {
+const {checked,name} = ev.target;
+if(checked){
+  onChange([...selected,name]);
+}else{
+  onchange([...selected.filter(name => name)])
+}
+    
+  }
     return (
         <>
       
               <label className="border p-4  flex rounded-2xl gap-2 items-center cursor-pointer">
-                <input type="checkbox" />
+                <input type="checkbox" name='wifi' onChange={handleCbClick} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

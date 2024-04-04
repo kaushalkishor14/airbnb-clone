@@ -123,6 +123,9 @@ res.json(uploadedFiles );
     
 });
 
+app.post('/places', (req, res)=>{
+    res.body()
+} )
 
 
 app.listen(5000);

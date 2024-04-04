@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Preks from "../Preks";
 import PhotosUploader from "../../PhotosUploader";
+import axios from "axios";
 
 export default function PlacesPage() {
   const { action } = useParams();
@@ -33,8 +34,13 @@ export default function PlacesPage() {
     );
   }
 
-  // addphotoby link
-
+ async function addNewPlace(ev){
+    ev.preventDefault();
+    const placeData {
+     title, address, 
+    }
+   const {data}= axios.post('/places',placeData)
+  }
  
 
   return (
@@ -65,7 +71,7 @@ export default function PlacesPage() {
       )}
       {action === "new" && (
         <div className="m-auto md:max-w-lg sm:max-w-sm lg:max-w-full">
-          <from>
+          <from onSubmit={addNewPlace}>
             {preInput("Title", "Title of your place")}
 
             <input

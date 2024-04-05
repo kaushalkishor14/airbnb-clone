@@ -4,6 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import Preks from "../Preks";
 import PhotosUploader from "../../PhotosUploader";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export default function PlacesPage() {
   const { action } = useParams();
@@ -16,6 +18,7 @@ export default function PlacesPage() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
+  const navitate = useNavigate();
 
   function inputHeader(text) {
     return <h2 className="text-2xl mt-4 ">{text}</h2>;
@@ -36,12 +39,14 @@ export default function PlacesPage() {
 
  async function addNewPlace(ev){
     ev.preventDefault();
-    const placeData {
-     title, address, 
+    const placeData = {
+     title, addres, description,preks,maxGuests,checkOut,checkIn 
     }
-   const {data}= axios.post('/places',placeData)
+   axios.post('/places',placeData)
+   navitate('/places');
   }
  
+  
 
   return (
     <div>

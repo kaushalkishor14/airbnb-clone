@@ -1,6 +1,6 @@
 import {createContext, useEffect, useState} from "react";
 import axios from "axios";
-// import {data} from "autoprefixer";
+import {data} from "autoprefixer";
 
 export const UserContext = createContext({});
 
@@ -15,10 +15,9 @@ export function UserContextProvider({children}) {
         setReady(true);
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
   return (
-    <UserContext.Provider value={{user,setUser,ready,setReady}}>
+    <UserContext.Provider value={{user,setUser,ready}}>
       {children}
     </UserContext.Provider>
   );

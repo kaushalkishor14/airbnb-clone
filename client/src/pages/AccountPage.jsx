@@ -40,7 +40,7 @@ export default function AccoundPage() {
 
   return (
     <div>
-      <nav className="w-full mt-8 flex gap-2 justify-center ">
+      <nav className="w-full mt-7 flex gap-2 justify-center ">
         <Link to={"/account"} className={linkClasses("profile")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -4,11 +4,14 @@ import LoginPage from "./pages/LoginPage";
 import OutLet from "./component/OutLet";
 import Register from "./pages/RegisterPage";
 // import axios  from "axios";
-import AccoundPage from "./pages/AccountPage";
+// import AccoundPage from "./pages/AccountPage";
 import { UserContextProvider } from "./UserContext";
 
 
 import axios from 'axios';
+import ProfilePage from "./pages/ProfilePage";
+import PlacePage from "./pages/PlacesPage";
+import PlacesFormPage from "./pages/PlacesFormPage";
 
 axios.defaults.baseURL = 'http://127.0.0.1:5000';
 
@@ -23,8 +26,9 @@ function App() {
   <Route path="/" element={<IndexPage/>}/>
   <Route path="/login" element={<LoginPage/>}/>
   <Route path="/register" element={<Register/>}/>
-  <Route path="/account/:subpage?" element={<AccoundPage/>}/>
-  <Route path="/account/:subpage/:action" element={<AccoundPage/>}/>
+  <Route path="/account" element={<ProfilePage/>}/>
+  <Route path="/account/places" element={<PlacePage/>}/>
+  <Route path="/account/places/new" element={<PlacesFormPage/>}/>
   
   </Route>
 </Routes>

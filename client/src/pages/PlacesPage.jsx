@@ -6,12 +6,11 @@ import PhotosUploader from "../../PhotosUploader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 export default function PlacesPage() {
   const { action } = useParams();
   const [title, setTitle] = useState("");
   const [addres, setAddress] = useState("");
- 
+
   const [description, setDescription] = useState("");
   const [preks, setPreks] = useState([]);
   const [extrainfo, setExtraInfo] = useState("");
@@ -37,16 +36,20 @@ export default function PlacesPage() {
     );
   }
 
- async function addNewPlace(ev){
+  async function addNewPlace(ev) {
     ev.preventDefault();
     const placeData = {
-     title, addres, description,preks,maxGuests,checkOut,checkIn 
-    }
-   axios.post('/places',placeData)
-   navitate('/places');
+      title,
+      addres,
+      description,
+      preks,
+      maxGuests,
+      checkOut,
+      checkIn,
+    };
+    axios.post("/places", placeData);
+    navitate("/places");
   }
- 
-  
 
   return (
     <div>
@@ -94,9 +97,8 @@ export default function PlacesPage() {
               placeholder="addres"
             />
             {preInput("Photos", "Add more photo you like")}
-            <PhotosUploader/>
+            <PhotosUploader />
 
-          
             <h2 className="text-2xl mt-4 ">Description</h2>
             <p className="text-gray-400 text sm">
               Describe about your place you vist

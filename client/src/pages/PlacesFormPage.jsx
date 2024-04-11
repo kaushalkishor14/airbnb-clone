@@ -1,4 +1,4 @@
-// import PhotosUploader from "../PhotosUploader.jsx";
+import PhotosUploader from "../PhotosUploader.jsx";
 import Perks from "../Preks";
 import { useEffect, useState } from "react";
 
@@ -106,7 +106,7 @@ export default function PlacesFormPage() {
           placeholder="address"
         />
         {preInput("Photos", "more = better")}
-        {/* <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} /> */}
+        <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
         {preInput("Description", "description of the place")}
         <textarea
           value={description}

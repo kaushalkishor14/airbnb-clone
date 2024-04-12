@@ -124,6 +124,8 @@ app.post('/upload', photosMiddleware.array('photo', 100), (req, res) => {
 
 });
 
+
+
 app.post('/places', (req, res) => {
     const { token } = req.cookies;
     const { title, address, photos, description, perks, extraInfo, checkOut, checkIn, maxGuests } = req.body; 

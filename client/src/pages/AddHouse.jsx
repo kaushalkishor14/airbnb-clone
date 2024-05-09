@@ -1,3 +1,10 @@
 export default function AddHouse(){
-    return <div>this is home  page</div>
+    return <div className="mt-4 h-max">
+        
+        
+        <div>
+             home pages
+        </div>
+        
+        </div>
 }
